@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import Shelf from './Shelf';
-import Test from './Test';
+import React, { useState, useLayoutEffect } from 'react'
+
+import Shelf from './Shelf'
 
 function App() {
-  const [test, setTest] = useState('rafael');
+  const [show, setShow] = useState(false)
 
-  useEffect(() => {
-    setTest('klynger');
-  }, []);
+  useLayoutEffect(() => {
+    if (!show) {
+      setShow(true)
+    }
+  }, [show])
+
+  const handleClick = () => {
+    setShow(false)
+  }
 
   return (
     <div className="App">
-      <Shelf />
-      <Test test={test} />
+      {show && <Shelf />}
+      <button onClick={handleClick}>Refresh</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

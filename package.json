@@ -13,10 +13,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "eject": "react-scripts eject",
+    "lint": "tsc --noEmit && eslint --quiet --fix --ext ts,tsx ."
   },
   "browserslist": {
     "production": [
@@ -41,7 +39,11 @@
     "@types/react-transition-group": "^4.2.4",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "@vtex/prettier-config": "^0.1.4",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.19.0"
+    "eslint-config-vtex": "^12.3.2",
+    "eslint-config-vtex-react": "^6.3.2",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.4"
   }
 }
