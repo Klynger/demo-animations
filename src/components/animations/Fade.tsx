@@ -11,10 +11,11 @@ import {
 
 import useForkRef from '../../modules/useForkRef'
 import { duration } from '../../modules/transitionsConstants'
-import getTransitionProps from '../../modules/getTransitionProps'
+import getTransitionProps, { reflow } from '../../modules/getTransitionProps'
 import createTransition from '../../modules/createTransition'
 
-interface Props {
+interface Props<T extends HTMLElement>
+  extends React.DetailedHTMLProps<React.HTMLAttributes<T>, T> {
   in?: boolean
   children: React.ReactElement
   timeout?: TransitionProps['timeout']
@@ -39,10 +40,11 @@ const defaultTimeout = {
 }
 
 const Fade = React.forwardRef(function Fade(
-  props: Props,
-  ref: React.Ref<unknown>
+  props: Props<any>,
+  ref: React.Ref<HTMLElement>
 ) {
   const {
+    style,
     onExit,
     onEnter,
     children,
@@ -53,7 +55,11 @@ const Fade = React.forwardRef(function Fade(
 
   const handleRef = useForkRef(ref, (children as any).ref)
   const handleEnter: EnterHandler = (node, isAppearing) => {
-    const transitionProps = getTransitionProps({ timeout }, { mode: 'enter' })
+    reflow(node) // So the animation always start from the start.
+    const transitionProps = getTransitionProps(
+      { style, timeout },
+      { mode: 'enter' }
+    )
     node.style.transition = createTransition('opacity', transitionProps)
 
     if (onEnter) {
@@ -79,14 +85,17 @@ const Fade = React.forwardRef(function Fade(
       onEnter={handleEnter}
       {...other}
     >
-      {(state: TransitionStatus) => {
+      {(state: TransitionStatus, childProps: any) => {
         return React.cloneElement(children, {
           ref: handleRef,
           style: {
             opacity: getOpacity(state),
             visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
             ...children.props.style,
+            ...style,
+            ...children.props.style,
           },
+          ...childProps,
         })
       }}
     </Transition>
