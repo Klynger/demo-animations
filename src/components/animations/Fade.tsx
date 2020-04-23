@@ -1,6 +1,5 @@
 import React from 'react'
-import { Transition } from 'react-transition-group'
-import {
+import Transition, {
   ENTERED,
   ExitHandler,
   EnterHandler,

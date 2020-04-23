@@ -23,8 +23,6 @@ export interface TransitionProps
     Partial<Pick<_TransitionProps, TransitionKeys>> {
   style?: React.CSSProperties
 }
-// export type TransitionProps = TransitionActions &
-//   Partial<Pick<_TransitionProps, TransitionKeys>>
 
 export interface TransitionPropsOptions {
   mode: 'enter' | 'exit' | 'appear'
@@ -38,13 +36,11 @@ export default function getTransitionProps(
 ) {
   const { style = {}, timeout } = props
 
-  let duration: number | string | undefined = 0
+  let duration: number | string = 0
   if (typeof timeout === 'number') {
     duration = timeout
   } else if (typeof timeout === 'object' && options && timeout[options.mode]) {
-    duration = timeout[options.mode]
-  } else {
-    duration = 0
+    duration = timeout[options.mode] ?? 0
   }
 
   return { duration, delay: style.transitionDelay }
