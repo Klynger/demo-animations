@@ -6,7 +6,7 @@
 
 export const duration = {
   enteringScreen: 350,
-  leavingScreen: 264,
+  leavingScreen: 294,
   standard: 400,
 }
 

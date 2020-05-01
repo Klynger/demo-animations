@@ -1,24 +1,18 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState } from 'react'
 
 import Shelf from './Shelf'
 
 function App() {
   const [show, setShow] = useState(false)
 
-  useLayoutEffect(() => {
-    if (!show) {
-      setShow(true)
-    }
-  }, [show])
-
   const handleClick = () => {
-    setShow(false)
+    setShow(!show)
   }
 
   return (
     <div className="App">
-      {show && <Shelf />}
-      <button onClick={handleClick}>Refresh</button>
+      <Shelf show={show} />
+      <button onClick={handleClick}>Toggle</button>
     </div>
   )
 }

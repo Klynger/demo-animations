@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import Fade from './animations/Fade'
 import Grow from './animations/Grow'
 import { PRODUCTS } from '../modules/mock'
 import ProductSummary from './ProductSummary'
+import Slide from './animations/Slide'
+
+const transitionComponents = [Slide, Fade, Grow] as const
 
 function getAnimationByIndex(i: number) {
-  return i % 2 === 0 ? Fade : Grow
+  return transitionComponents[i % transitionComponents.length]
 }
 
-export default function Shelf() {
-  const products = PRODUCTS
-  console.log(products)
-  const [show, setShow] = useState(false)
+interface Props {
+  show?: boolean
+}
 
-  useEffect(() => {
-    setShow(true)
-  }, [])
+export default function Shelf(props: Props) {
+  const { show = false } = props
+  const products = PRODUCTS
 
   return (
     <div className="shelf-container">
       <ul className="shelf-list">
         {products.map((product, i) => {
-          console.log('iae boy ', i)
           const TransitionCompponent = getAnimationByIndex(i)
           return (
             <TransitionCompponent in={show} key={product.brand}>

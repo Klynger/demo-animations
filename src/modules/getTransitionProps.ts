@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react'
 import {
   TransitionActions,
   TransitionProps as _TransitionProps,
@@ -13,15 +14,15 @@ export type TransitionHandlerKeys =
 export type TransitionKeys =
   | 'in'
   | 'mountOnEnter'
-  | 'unountOnExit'
+  | 'unmountOnExit'
   | 'timeout'
-  | 'mountOnEnter'
+  | 'addEndListener'
   | TransitionHandlerKeys
 
 export interface TransitionProps
   extends TransitionActions,
     Partial<Pick<_TransitionProps, TransitionKeys>> {
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
 
 export interface TransitionPropsOptions {
@@ -32,16 +33,13 @@ export const reflow = (node: HTMLElement) => node.scrollTop
 
 export default function getTransitionProps(
   props: TransitionProps,
-  options?: TransitionPropsOptions
+  options: TransitionPropsOptions
 ) {
   const { style = {}, timeout } = props
+  const { mode } = options
 
-  let duration: number | string = 0
-  if (typeof timeout === 'number') {
-    duration = timeout
-  } else if (typeof timeout === 'object' && options && timeout[options.mode]) {
-    duration = timeout[options.mode] ?? 0
+  return {
+    duration: typeof timeout === 'number' ? timeout : timeout?.[mode] ?? 0,
+    delay: style.transitionDelay,
   }
-
-  return { duration, delay: style.transitionDelay }
 }

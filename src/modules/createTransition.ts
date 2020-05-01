@@ -21,7 +21,8 @@ export default function createTransition(
     duration = transitionDuration.standard,
   } = options
 
-  return (Array.isArray(props) ? props : [props]).map(
+  return (Array.isArray(props) ? props : [props])
+    .map(
       (animatedProp) =>
         `${animatedProp} ${
           typeof duration === 'string' ? duration : formatMs(duration)
