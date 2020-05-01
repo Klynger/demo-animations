@@ -143,7 +143,7 @@ const Grow = React.forwardRef(function Grou(
       onExit={handleExit}
       onEnter={handleEnter}
       addEndListener={addEndListener}
-      timeout={timeout === 'auto' ? 0 : timeout}
+      timeout={timeout === 'auto' ? undefined : timeout}
       {...other}
     >
       {(state: TransitionStatus, childProps: any) => {
@@ -152,8 +152,8 @@ const Grow = React.forwardRef(function Grou(
             opacity: 0,
             transform: getScale(0.75),
             visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
-            ...style,
             ...styles[state],
+            ...style,
             ...children.props.style,
           },
           ref: handleRef,
