@@ -2,11 +2,12 @@ import React from 'react'
 
 import Fade from './animations/Fade'
 import Grow from './animations/Grow'
+import Zoom from './animations/Zoom'
+import Slide from './animations/Slide'
 import { PRODUCTS } from '../modules/mock'
 import ProductSummary from './ProductSummary'
-import Slide from './animations/Slide'
 
-const transitionComponents = [Slide, Fade, Grow] as const
+const transitionComponents = [Zoom, Slide, Fade, Grow] as const
 
 function getAnimationByIndex(i: number) {
   return transitionComponents[i % transitionComponents.length]
