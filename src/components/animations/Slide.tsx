@@ -225,11 +225,11 @@ const Slide = React.forwardRef(function Slide(
       onEntering={handleEntering}
       {...(other as any)}
     >
-      {(_: TransitionStatus, childProps: any) => {
+      {(state: TransitionStatus, childProps: any) => {
         return React.cloneElement(children, {
           ref: handleRef,
           style: {
-            // visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
+            visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
             ...style,
             ...children.props.style,
           },
