@@ -6,8 +6,9 @@ import Zoom from './animations/Zoom'
 import Slide from './animations/Slide'
 import { PRODUCTS } from '../modules/mock'
 import ProductSummary from './ProductSummary'
+import Collapse from './animations/Collapse'
 
-const transitionComponents = [Zoom, Slide, Fade, Grow] as const
+const transitionComponents = [Collapse, Zoom, Slide, Fade, Grow] as const
 
 function getAnimationByIndex(i: number) {
   return transitionComponents[i % transitionComponents.length]

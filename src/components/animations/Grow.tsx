@@ -3,24 +3,24 @@ import Transition, {
   EndHandler,
   ExitHandler,
   EnterHandler,
-  TransitionProps,
   TransitionStatus,
   ENTERING,
   ENTERED,
 } from 'react-transition-group/Transition'
 
 import useForkRef from '../../modules/useForkRef'
-import getTransitionProps, { reflow } from '../../modules/getTransitionProps'
-import getAutoHeightDuration from '../../modules/getAutoHeightDuration'
 import createTransition from '../../modules/createTransition'
+import getAutoHeightDuration from '../../modules/getAutoHeightDuration'
+import getTransitionProps, {
+  reflow,
+  TransitionProps,
+} from '../../modules/getTransitionProps'
 
-interface Props<T extends HTMLElement>
-  extends React.DetailedHTMLProps<React.HTMLAttributes<T>, T> {
+interface Props extends TransitionProps {
   in?: boolean
   onExit?: ExitHandler
   onEnter?: EnterHandler
   children: React.ReactElement
-  timeout?: TransitionProps['timeout'] | 'auto'
 }
 
 function getScale(value: number) {
@@ -41,7 +41,7 @@ const styles: Record<PossibleStyles | string, CSSProperties> = {
 }
 
 const Grow = React.forwardRef(function Grou(
-  props: Props<any>,
+  props: Props,
   ref: React.Ref<HTMLElement>
 ) {
   const {
